@@ -16,3 +16,5 @@ name = input("What is your name? ")
 print(name )
 age = input("What is your age")
 print(age)
+friends = ["ado","osten","igor","ben","cole","brodie"]
+print(friends)
