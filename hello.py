@@ -12,3 +12,7 @@ print(is_a_girl)
 city = "Aberdeen"
 print(city)
 print("int 2 siblings")
+name = input("What is your name? ")
+print(name )
+age = input("What is your age")
+print(age)
