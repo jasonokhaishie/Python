@@ -19,5 +19,5 @@ print(age-height)
 print(age//height)
 print(age%height)
 print(age**height)
-print("Is a equal to b? , a==b")
-print("Is a not equal to b?, a!=b")
+print("Is a equal to b? , a==b" )  #False
+print("Is a not equal to b?, a!=b") #True
