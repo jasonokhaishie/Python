@@ -27,3 +27,5 @@ print(age==height)
 
 print()
 print("Is a not equal to b?, a!=b") #True
+print("Is a less than b?") #False
+print("Is a  Greater or equal to b?") #True
