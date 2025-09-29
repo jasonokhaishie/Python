@@ -24,8 +24,7 @@ print("Is a equal to b? , a==b" )  #False
 print(age<height)
 print(age>height)
 print(age==height)
-
-print()
-print("Is a not equal to b?, a!=b") #True
-print("Is a less than b?") #False
-print("Is a  Greater or equal to b?") #True
+print("Is age greater or equal to height?")#True
+print("Is age not equal to height?, a!=b") #True
+print("Is age less than height?") #False
+print("Is age  Greater or equal to height?") #True
