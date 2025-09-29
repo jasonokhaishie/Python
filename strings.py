@@ -7,3 +7,7 @@ print(full_name)
 print(first_name)
 first_letter=first_name[0]
 print(first_letter)
+
+# string slicing
+middle_letters = first_name[1:5]
+print(middle_letters)
