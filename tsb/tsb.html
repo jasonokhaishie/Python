@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Battle Simulator</title>
+  <style>
+    body { font-family: sans-serif; background: #111; color: #eee; text-align: center; }
+    h1 { color: #f33; }
+    .teams { display: flex; justify-content: space-around; margin: 20px 0; }
+    .team { width: 45%; background: #222; padding: 10px; border-radius: 8px; }
+    .fighter { margin: 5px 0; }
+    #log { max-height: 200px; overflow-y: auto; background: #000; padding: 10px; border-radius: 8px; }
+    button { padding: 10px 20px; font-size: 16px; margin-top: 20px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>⚔️ Ultimate Battleground 🐾</h1>
+  <div class="teams">
+    <div class="team" id="warriors"><h2>Warriors</h2></div>
+    <div class="team" id="beasts"><h2>Beasts</h2></div>
+  </div>
+  <button onclick="startBattle()">Start Battle</button>
+  <div id="log"></div>
+
+  <script>
+    const TEAM_SIZE = 5, MAX_HP = 100, MAX_ATK = 30;
+    let warriors = [], beasts = [];
+
+    function createFighter(name) {
+      return { name, hp: rand(60, MAX_HP), atk: rand(10, MAX_ATK), alive: true };
+    }
+
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function renderTeams() {
+      document.getElementById("warriors").innerHTML = "<h2>Warriors</h2>" +
+        warriors.map(f => `<div class="fighter">${f.name}: ${f.alive ? f.hp + " HP" : "💀"}</div>`).join("");
+      document.getElementById("beasts").innerHTML = "<h2>Beasts</h2>" +
+        beasts.map(f => `<div class="fighter">${f.name}: ${f.alive ? f.hp + " HP" : "💀"}</div>`).join("");
+    }
+
+    function log(msg) {
+      document.getElementById("log").innerHTML += msg + "<br>";
+    }
+
+    function pickAlive(team) {
+      return team.filter(f => f.alive)[Math.floor(Math.random() * team.filter(f => f.alive).length)];
+    }
+
+    async function startBattle() {
+      warriors = Array.from({ length: TEAM_SIZE }, (_, i) => createFighter("W-" + (i + 1)));
+      beasts = Array.from({ length: TEAM_SIZE }, (_, i) => createFighter("B-" + (i + 1)));
+      document.getElementById("log").innerHTML = "";
+      renderTeams();
+
+      let round = 1;
+      while (warriors.some(f => f.alive) && beasts.some(f => f.alive)) {
+        log(`<b>Round ${round++}</b>`);
+        let attacker = round % 2 ? pickAlive(warriors) : pickAlive(beasts);
+        let defender = round % 2 ? pickAlive(beasts) : pickAlive(warriors);
+        if (!attacker || !defender) break;
+        let dmg = attacker.atk;
+        defender.hp -= dmg;
+        if (defender.hp <= 0) {
+          defender.hp = 0;
+          defender.alive = false;
+          log(`${attacker.name} ⚔️ ${defender.name} for ${dmg} - 💀`);
+        } else {
+          log(`${attacker.name} ⚔️ ${defender.name} for ${dmg}`);
+        }
+        renderTeams();
+        await new Promise(r => setTimeout(r, 600));
+      }
+
+      let winner = warriors.some(f => f.alive) ? "⚔️ Warriors" : "🐾 Beasts";
+      log(`<b>${winner} win the battle!</b>`);
+    }
+  </script>
+</body>
+</html>
